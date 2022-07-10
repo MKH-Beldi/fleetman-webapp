@@ -18,6 +18,10 @@ pipeline {
                 sh 'npm run sonar'
             }
         }
+        stage("Quality Gate"){
+            timeout(time: 2, unit: 'MINUTES') {
+            waitForQualityGate abortPipeline: true
+        }
         stage('Get last commit ID') {
             steps {
                 checkout scm
@@ -27,10 +31,6 @@ pipeline {
                 }
             }
         }
-        stage("Quality Gate"){
-            timeout(time: 2, unit: 'MINUTES') {
-                waitForQualityGate() abortPipeline: true
-            }
         stage('npm install') {
             steps {
                 sh 'npm install'
