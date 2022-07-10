@@ -11,9 +11,10 @@ pipeline {
             }
         }
         stage('SonarQube Scan Code Quality') {
+            def scannerHome = tool 'SonarScanner 2.14';
             steps {
               withSonarQubeEnv(installationName: 'sonarqube')
-              sh "npm run sonar"
+              sh "${scannerHome}/bin/sonar-scanner"
             }
         }
         stage('Get last commit ID') {
