@@ -1,10 +1,3 @@
-FROM node:10 AS builder
-
-WORKDIR /app
-
-COPY . .
-
-RUN npm i && npm run build
 
 FROM nginx:1.14.0-alpine
 
@@ -19,7 +12,7 @@ RUN apk add --update bash && rm -rf /var/cache/apk/*
 
 RUN rm -rf /usr/share/nginx/html/*
 
-COPY --from=builder /app/dist/ /usr/share/nginx/html
+COPY /dist /usr/share/nginx/html
 
 COPY nginx.conf.j2 /templates/
 

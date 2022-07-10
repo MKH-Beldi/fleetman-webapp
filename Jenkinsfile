@@ -24,5 +24,10 @@ pipeline {
                 sh 'npm run build'
             }
         }
+        stage('Docker image build') {
+            steps {
+                sh "docker build -t fleetman-webapp:${commit_id} ."
+            }
+        }
     }
 }
