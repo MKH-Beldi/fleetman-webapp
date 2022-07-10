@@ -11,12 +11,10 @@ pipeline {
             }
         }
         stage('SonarQube Scan Code Quality') {
-            tools {
-                sonarQube 'SonarScan4.7'
-            }
             steps {
                 withSonarQubeEnv('sonarqube')
-                sh 'sonar-scanner'
+                sh 'npm install sonar-scanner'
+                sh 'npm run sonar'
             }
         }
         stage('Get last commit ID') {
