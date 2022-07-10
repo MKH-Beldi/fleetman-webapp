@@ -5,7 +5,7 @@ pipeline {
     }
 
     stages {
-        stage('Get last commit ID') {
+        stage('Clean folder') {
             steps {
                 sh 'rm -Rf ./*'
             }
