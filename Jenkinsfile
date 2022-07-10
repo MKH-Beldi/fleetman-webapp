@@ -11,12 +11,9 @@ pipeline {
             }
         }
         stage('SonarQube Scan Code Quality') {
-            agent any
-            steps {
-                withSonarQubeEnv('sonarqubeIns')
-                sh 'npm install sonar-scanner'
-                sh 'npm run sonar'
-            }
+            def scannerHome = tool 'SonarScanner 4.0';
+            withSonarQubeEnv('sonarqubeIns')
+            sh "${scannerHome}/bin/sonar-scanner"
         }
         stage("Quality Gate") {
             steps {
