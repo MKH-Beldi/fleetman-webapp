@@ -16,7 +16,7 @@ pipeline {
                     scannerHome = tool 'SonarScanner 4.0';
                 }
                 withSonarQubeEnv('sonarqubeIns') {
-                  sh "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=fleetman-webapp -Dsonar.sources=src/ "
+                  sh "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=fleetman-webapp -Dsonar.analysis.mode=publish -Dsonar.sources=src -Dsonar.exclusions=node_modules/*,**/*.spec.ts -Dsonar.typescript.lcov.reportPaths=coverage/lcov.info"
                 }
             }
         }
