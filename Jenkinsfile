@@ -9,6 +9,7 @@ pipeline {
             steps {
                  cleanWs()
             }
+        }
         stage('Get last commit ID') {
             steps {
                 checkout scm
