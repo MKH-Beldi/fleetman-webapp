@@ -25,6 +25,7 @@ pipeline {
             }
         }
         stage('Docker image build') {
+            agent any
             steps {
                 sh "docker build -t fleetman-webapp:${commit_id} ."
             }
