@@ -11,6 +11,7 @@ pipeline {
             }
         }
         stage('SonarQube Scan Code Quality') {
+            agent any
             steps {
                 withSonarQubeEnv(installationName:'sonarqube')
                 sh 'npm install sonar-scanner'
