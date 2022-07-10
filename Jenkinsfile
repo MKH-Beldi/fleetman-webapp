@@ -12,8 +12,10 @@ pipeline {
         }
         stage('SonarQube Scan Code Quality') {
             def scannerHome = tool 'SonarScanner 4.0';
-            withSonarQubeEnv('sonarqubeIns') {
-              sh "${scannerHome}/bin/sonar-scanner"
+            steps {
+                withSonarQubeEnv('sonarqubeIns') {
+                  sh "${scannerHome}/bin/sonar-scanner"
+                }
             }
         }
         stage("Quality Gate") {
