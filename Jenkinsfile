@@ -12,7 +12,7 @@ pipeline {
         }
         stage('SonarQube Scan Code Quality') {
             steps {
-                withSonarQubeEnv('sonarqube')
+                withSonarQubeEnv(installationName:'sonarqube')
                 sh 'npm install sonar-scanner'
                 sh 'npm run sonar'
             }
