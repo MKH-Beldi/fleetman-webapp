@@ -7,7 +7,7 @@ pipeline {
     stages {
         stage('Clean folder') {
             steps {
-                sh 'rm -Rf ./*'
+                 cleanWs()
             }
         stage('Get last commit ID') {
             steps {
