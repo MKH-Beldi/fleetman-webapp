@@ -10,6 +10,15 @@ pipeline {
                  cleanWs()
             }
         }
+        stage('Get last commit ID') {
+            steps {
+                checkout scm
+                sh 'git rev-parse --short HEAD > .git/commit-id'
+                script {
+                    commit_id = readFile('.git/commit-id').trim()
+                }
+            }
+        }
         stage('SonarQube Scan Code Quality') {
             steps {
                 script {
@@ -24,15 +33,6 @@ pipeline {
             steps {
                 timeout(time: 2, unit: 'MINUTES') {
                     waitForQualityGate abortPipeline: true
-                }
-            }
-        }
-        stage('Get last commit ID') {
-            steps {
-                checkout scm
-                sh 'git rev-parse --short HEAD > .git/commit-id'
-                script {
-                    commit_id = readFile('.git/commit-id').trim()
                 }
             }
         }
