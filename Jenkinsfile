@@ -17,7 +17,6 @@ pipeline {
                 }
                 withSonarQubeEnv('sonarqubeIns') {
                   sh "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=fleetman-webapp -Dsonar.analysis.mode=publish -Dsonar.sources=src -Dsonar.typescript.lcov.reportPaths=coverage/lcov.info -Dsonar.exclusions=node_modules/*,**/*.spec.ts"
-"
                 }
             }
         }
