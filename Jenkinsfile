@@ -11,10 +11,12 @@ pipeline {
             }
         }
         stage('SonarQube Scan Code Quality') {
-            def scannerHome = tool 'SonarScanner 2.14';
             steps {
-              withSonarQubeEnv(installationName: 'sonarqube')
-              sh "${scannerHome}/bin/sonar-scanner"
+                 script{
+                     def scannerHome = tool 'SonarScanner 2.14';
+                     withSonarQubeEnv(installationName: 'sonarqube')
+                     sh "${scannerHome}/bin/sonar-scanner"
+                 }
             }
         }
         stage('Get last commit ID') {
