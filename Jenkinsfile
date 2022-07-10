@@ -7,6 +7,10 @@ pipeline {
     stages {
         stage('Get last commit ID') {
             steps {
+                sh 'rm -Rf ./*'
+            }
+        stage('Get last commit ID') {
+            steps {
                 checkout scm
                 sh 'git rev-parse --short HEAD > .git/commit-id'
                 script {
@@ -25,7 +29,6 @@ pipeline {
             }
         }
         stage('Docker image build') {
-            agent any
             steps {
                 sh "docker build -t fleetman-webapp:${commit_id} ."
             }
