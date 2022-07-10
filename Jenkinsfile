@@ -13,8 +13,8 @@ pipeline {
         stage('SonarQube Scan Code Quality') {
             steps {
                  script{
-                      def scannerHome = tool 'sonarscan';
-                     withSonarQubeEnv(installationName: 'sonarqube')
+                      def scannerHome = tool 'SonarScan';
+                     withSonarQubeEnv('sonarqube')
                      sh "${scannerHome}/bin/sonar-scanner"
                  }
             }
