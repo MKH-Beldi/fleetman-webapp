@@ -1,8 +1,9 @@
 pipeline {
-    agent any
+  agent any
     tools {
         nodejs 'node 18.5.0'
     }
+
     stages {
         stage('Get last commit ID') {
             steps {
@@ -13,14 +14,15 @@ pipeline {
                 }
             }
         }
-        stages('npm install') {
+        stage('npm install') {
             steps {
                 sh 'npm install'
             }
         }
-        stages('npm build') {
+        stage('npm build') {
             steps {
                 sh 'npm run build'
             }
         }
+    }
 }
