@@ -18,9 +18,12 @@ pipeline {
                 sh 'npm run sonar'
             }
         }
-        stage("Quality Gate"){
-            timeout(time: 2, unit: 'MINUTES') {
-            waitForQualityGate abortPipeline: true
+        stage("Quality Gate") {
+            steps {
+                timeout(time: 2, unit: 'MINUTES') {
+                    waitForQualityGate abortPipeline: true
+                }
+            }
         }
         stage('Get last commit ID') {
             steps {
