@@ -10,6 +10,12 @@ pipeline {
                  cleanWs()
             }
         }
+        stage('SonarQube Scan Code Quality') {
+            steps {
+              withSonarQuebEnv(installationName: 'sonarqube')
+              sh "/usr/local/sonar-scanner"
+            }
+        }
         stage('Get last commit ID') {
             steps {
                 checkout scm
