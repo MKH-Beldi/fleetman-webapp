@@ -16,7 +16,7 @@ pipeline {
                     scannerHome = tool 'SonarScanner 4.0';
                 }
                 withSonarQubeEnv('sonarqubeIns') {
-                  sh "${scannerHome}/bin/sonar-scanner"
+                  sh "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=develop -Dsonar.sources=. "
                 }
             }
         }
