@@ -13,7 +13,7 @@ pipeline {
         stage('SonarQube Scan Code Quality') {
             agent any
             steps {
-                withSonarQubeEnv(installationName:'sonarqube')
+                withSonarQubeEnv(installationName:'sonarqubeIns')
                 sh 'npm install sonar-scanner'
                 sh 'npm run sonar'
             }
