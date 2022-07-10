@@ -12,8 +12,8 @@ pipeline {
         }
         stage('SonarQube Scan Code Quality') {
             steps {
-              withSonarQubeEnv('sonarqube')
-              sh "/usr/local/sonar-scanner"
+              withSonarQubeEnv(installationName: 'sonarqube')
+              sh "npm run sonar"
             }
         }
         stage('Get last commit ID') {
