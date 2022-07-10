@@ -1,5 +1,5 @@
 {
-  "name": "k8s-fleetman-webapp-angular",
+  "name": "fleetman-webapp",
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
