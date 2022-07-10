@@ -13,7 +13,7 @@ pipeline {
         stage('SonarQube Scan Code Quality') {
             agent any
             steps {
-                withSonarQubeEnv(installationName:'sonarqubeIns')
+                withSonarQubeEnv('sonarqubeIns')
                 sh 'npm install sonar-scanner'
                 sh 'npm run sonar'
             }
@@ -27,6 +27,10 @@ pipeline {
                 }
             }
         }
+        stage("Quality Gate"){
+            timeout(time: 2, unit: 'MINUTES') {
+                waitForQualityGate() abortPipeline: true
+            }
         stage('npm install') {
             steps {
                 sh 'npm install'
