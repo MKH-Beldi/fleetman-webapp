@@ -6,7 +6,7 @@ pipeline {
     environment {
         imageName = "fleetman-webapp"
         registryCredentials = "nexus"
-        registry = "20.124.158.218:8085/"
+        registry = "nexus-registry.eastus.cloudapp.azure.com:8085/"
         dockerImage = ''
     }
 
@@ -62,7 +62,7 @@ pipeline {
         stage('Push Docker image to Nexus Registry') {
             steps {
                 script {
-                    docker.withRegistry( "http://${registry}", registryCredentials )
+                    docker.withRegistry( 'http://'+registry, registryCredentials ) {
                     dockerImage.push()
                 }
             }
