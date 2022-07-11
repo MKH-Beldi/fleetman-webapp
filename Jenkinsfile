@@ -3,6 +3,12 @@ pipeline {
     tools {
         nodejs 'node 16.16.0'
     }
+    environment {
+        imageName = "fleetman-webapp"
+        registryCredentials = "nexus"
+        registry = "20.124.158.218:8085/"
+        dockerImage = ''
+      }
 
     stages {
         stage('Clean Workspace') {
@@ -48,8 +54,11 @@ pipeline {
         }
         stage('Docker image build') {
             steps {
-                sh "docker build -t fleetman-webapp:${commit_id} ."
+                 script {
+                    dockerImage = docker.build imageName + ":${commit_id}"
+                 }
             }
         }
+
     }
 }
