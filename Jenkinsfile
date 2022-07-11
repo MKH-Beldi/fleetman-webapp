@@ -8,7 +8,7 @@ pipeline {
         registryCredentials = "nexus"
         registry = "20.124.158.218:8085/"
         dockerImage = ''
-      }
+    }
 
     stages {
         stage('Clean Workspace') {
@@ -64,7 +64,7 @@ pipeline {
                 script {
 
                     docker.withRegistry( 'http://'+registry, registryCredentials )
-                    dockerImage.push("${commit_id}")
+                    dockerImage.push("latest")
                 }
             }
         }
