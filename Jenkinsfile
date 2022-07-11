@@ -5,7 +5,7 @@ pipeline {
     }
 
     stages {
-        stage('Clean folder') {
+        stage('Clean Workspace') {
             steps {
                  cleanWs()
             }
@@ -25,7 +25,8 @@ pipeline {
                     scannerHome = tool 'SonarScanner 4.0';
                 }
                 withSonarQubeEnv('sonarqubeIns') {
-                  sh "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=fleetman-webapp -Dsonar.language=ts -Dsonar.analysis.mode=publish  -Dsonar.sources=src -Dsonar.typescript.lcov.reportPaths=coverage/lcov.info -Dsonar.exclusions=node_modules/*,**/*.spec.ts"
+                  sh "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=fleetman-webapp -Dsonar.language=ts -Dsonar.analysis.mode=publish
+                      -Dsonar.sources=src -Dsonar.typescript.lcov.reportPaths=coverage/lcov.info -Dsonar.exclusions=node_modules/*,**/*.spec.ts"
                 }
             }
         }
