@@ -59,6 +59,15 @@ pipeline {
                  }
             }
         }
+        stage('Push Docker image to Nexus Registry') {
+            steps {
+                script {
+
+                    docker.withRegistry( 'http://'+registry, registryCredentials )
+                    dockerImage.push("${commit_id}")
+                }
+            }
+        }
 
     }
 }
