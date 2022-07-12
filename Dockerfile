@@ -17,7 +17,9 @@ COPY nginx.conf.j2 /templates/
 
 COPY docker-entrypoint.sh /
 
-RUN chmod +x /docker-entrypoint.sh
+WORKDIR /
+
+RUN chmod +x docker-entrypoint.sh
 
 ENTRYPOINT ["/docker-entrypoint.sh"]
 
