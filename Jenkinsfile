@@ -25,7 +25,7 @@ pipeline {
                 }
             }
         }
-        stage('SonarQube Scan Code Quality') {
+        stage('Scan Code Quality') {
             steps {
                 script {
                     scannerHome = tool 'SonarScanner 4.0';
@@ -42,12 +42,12 @@ pipeline {
                 }
             }
         }
-        stage('npm install') {
+        stage('Install dependencies') {
             steps {
                 sh 'npm install'
             }
         }
-        stage('npm build') {
+        stage('Build project') {
             steps {
                 sh 'npm run build --prod'
             }
