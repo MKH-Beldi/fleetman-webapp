@@ -1,4 +1,3 @@
-
 FROM nginx:1.14.0-alpine
 
 MAINTAINER Richard Chesterwood "richard@inceptiontraining.co.uk"
@@ -17,6 +16,8 @@ COPY /dist /usr/share/nginx/html
 COPY nginx.conf.j2 /templates/
 
 COPY docker-entrypoint.sh /
+
+RUN chmod +x /docker-entrypoint.sh
 
 ENTRYPOINT ["/docker-entrypoint.sh"]
 
