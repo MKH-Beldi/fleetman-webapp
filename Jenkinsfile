@@ -69,9 +69,12 @@ pipeline {
                 }
             }
         }
-       stage('Trigger K8S Manifest Update') {
-           build job: 'k8supdatemanifests', parameters: [string(name: 'DOCKERTAG', value: ${commit_id})]
-       }
+        stage('Trigger K8S Manifest Update') {
+            steps {
+                build job: 'k8supdatemanifests', parameters: [string(name: 'DOCKERTAG', value: ${commit_id})]
+            }
+
+        }
 
     }
 }
