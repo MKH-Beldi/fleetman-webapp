@@ -22,7 +22,7 @@ http {
         {% if SPRING_PROFILES_ACTIVE == 'local-microservice' %}
            proxy_pass          http://fleetman-api-gateway:8080/;
         {% else %}
-           proxy_pass          http://fleetman-api-gateway.default.svc.cluster.local:8080/;
+           proxy_pass          http://fleetman-api-gateway.fleetman.svc.cluster.local:8080/;
         {% endif %}
 
         proxy_read_timeout  90;
