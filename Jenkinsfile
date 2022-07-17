@@ -71,7 +71,7 @@ pipeline {
         }
         stage('Trigger K8S Manifest Update') {
             steps {
-                build job: 'k8supdatemanifests', parameters: [string(name: 'DOCKERTAG', value: commit_id)]
+                build job: 'k8s-update-manifests-fleetman-webapp', parameters: [string(name: 'DOCKERTAG', value: commit_id)]
             }
 
         }
