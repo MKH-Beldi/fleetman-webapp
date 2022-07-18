@@ -42,11 +42,6 @@ pipeline {
                 sh 'npm install'
             }
         }
-        stage('Test Karma') {
-          steps {
-              sh 'npm test'
-          }
-        }
         stage('Build') {
             steps {
                 sh 'npm run build --prod'
