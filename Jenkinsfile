@@ -9,15 +9,10 @@ pipeline {
         registry = "nexus-registry.eastus.cloudapp.azure.com:8085/"
         dockerImage = ''
     }
-
     stages {
-        stage('Clean Workspace') {
+        stage('Git Preparation') {
             steps {
-                 cleanWs()
-            }
-        }
-        stage('Get last commit ID') {
-            steps {
+                cleanWs()
                 checkout scm
                 sh 'git rev-parse --short HEAD > .git/commit-id'
                 script {
@@ -25,7 +20,7 @@ pipeline {
                 }
             }
         }
-        stage('Scan Code Quality') {
+        stage('SonarQube Scan Code Quality') {
             steps {
                 script {
                     scannerHome = tool 'SonarScanner 4.0';
@@ -35,7 +30,7 @@ pipeline {
                 }
             }
         }
-        stage("Quality Gate") {
+        stage("Quality Gate from SonarQube") {
             steps {
                 timeout(time: 2, unit: 'MINUTES') {
                     waitForQualityGate abortPipeline: true
@@ -47,7 +42,12 @@ pipeline {
                 sh 'npm install'
             }
         }
-        stage('Build project') {
+        stage('Test Karma') {
+          steps {
+              sh 'npm test'
+          }
+        }
+        stage('Build') {
             steps {
                 sh 'npm run build --prod'
             }
@@ -75,6 +75,5 @@ pipeline {
             }
 
         }
-
     }
 }
