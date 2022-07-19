@@ -20,7 +20,6 @@ import { DOCUMENT } from '@angular/platform-browser';
 
 const stompConfig: StompConfig = {
      url: "ws://" + window.location.hostname + ":" + window.location.port + "/api/updates",
-     // TODO will reinstate when dev complete.
      headers: {
      },
      heartbeat_in: 0, // Typical value 0 - disabled
