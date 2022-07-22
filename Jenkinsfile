@@ -110,9 +110,6 @@ pipeline {
         }
 
         stage('Trigger K8S Manifest Updating') {
-            when {
-                branch "feature/*"
-            }
             steps {
                 build job: 'k8s-update-manifests-fleetman-webapp', parameters: [string(name: 'DOCKERTAG', value: commit_id), string(name: 'BRANCH_GIT', value: branch_git)]
             }
