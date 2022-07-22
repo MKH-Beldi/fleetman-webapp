@@ -10,6 +10,29 @@ pipeline {
         dockerImage = ''
     }
     stages {
+
+        stage("Set environment Develop") {
+             when {
+                branch "feature/*"
+             }
+            steps{
+                 script {
+                    registry = "nexus-registry.eastus.cloudapp.azure.com:8086/"
+                 }
+            }
+        }
+
+        stage("Set environment QA") {
+             when {
+                branch "release/*"
+             }
+            steps{
+                 script {
+                    registry = "nexus-registry.eastus.cloudapp.azure.com:8088/"
+                 }
+            }
+        }
+
         stage('Git Preparation') {
             steps {
                 cleanWs()
@@ -17,9 +40,11 @@ pipeline {
                 sh 'git rev-parse --short HEAD > .git/commit-id'
                 script {
                     commit_id = readFile('.git/commit-id').trim()
+                    branch_git = env.BRANCH_NAME
                 }
             }
         }
+
         stage('SonarQube Scan Code Quality') {
             steps {
                 script {
@@ -30,6 +55,7 @@ pipeline {
                 }
             }
         }
+
         stage("Quality Gate from SonarQube") {
             steps {
                 timeout(time: 2, unit: 'MINUTES') {
@@ -37,23 +63,41 @@ pipeline {
                 }
             }
         }
+
         stage('Install dependencies') {
             steps {
                 sh 'npm install'
             }
         }
+
         stage('Build') {
             steps {
                 sh 'npm run build --prod'
             }
         }
-        stage('Docker image build') {
+
+        stage('Build Docker image environment Develop') {
+            when {
+                branch "feature/*"
+            }
             steps {
-                 script {
-                    dockerImage = docker.build imageName + ":${commit_id}"
-                 }
+                script {
+                    dockerImage = docker.build imageName + ":${commit_id}-dev"
+                }
             }
         }
+
+        stage('Build Docker image environment QA') {
+            when {
+                branch "release/*"
+            }
+            steps {
+                script {
+                    dockerImage = docker.build imageName + ":${commit_id}-test"
+                }
+            }
+        }
+
         stage('Push Docker image to Nexus Registry') {
             steps {
                 script {
@@ -64,11 +108,14 @@ pipeline {
                 }
             }
         }
-        stage('Trigger K8S Manifest Update') {
-            steps {
-                build job: 'k8s-update-manifests-fleetman-webapp', parameters: [string(name: 'DOCKERTAG', value: commit_id)]
-            }
 
+        stage('Trigger K8S Manifest Updating') {
+            when {
+                branch "feature/*"
+            }
+            steps {
+                build job: 'k8s-update-manifests-fleetman-webapp', parameters: [string(name: 'DOCKERTAG', value: commit_id), string(name: 'BRANCH_GIT', value: branch_git)]
+            }
         }
     }
 }
